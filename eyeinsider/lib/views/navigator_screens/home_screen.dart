@@ -1,8 +1,6 @@
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/theme/component_thme/component_theme.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
             unselectedItemColor: Colors.white,
             selectedItemColor: ColorConstant.primary,
           
-            items: [
+            items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home) , label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.camera) , label: 'Upload'),
             BottomNavigationBarItem(icon: Icon(Icons.book) , label: 'Blogs'),

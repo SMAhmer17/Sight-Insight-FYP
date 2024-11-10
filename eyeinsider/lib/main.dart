@@ -1,6 +1,6 @@
 
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/theme/custom_theme_data.dart';
+import 'package:eyeinsider/service/DI/di_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +23,10 @@ SystemChrome.setSystemUIOverlayStyle(
       ),
     );
 
+     
      WidgetsFlutterBinding.ensureInitialized();
+ 
+  DI.initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

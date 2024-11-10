@@ -2,7 +2,6 @@
 
 import 'package:eyeinsider/constants/color_constant.dart';
 import 'package:eyeinsider/constants/utils.dart';
-import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:flutter/material.dart';
 class ComponentTheme {
   //================ Appbar Theme Start =================

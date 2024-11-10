@@ -1,6 +1,5 @@
 import 'package:eyeinsider/constants/color_constant.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
-import 'package:eyeinsider/views/auth/login_screen.dart';
 import 'package:eyeinsider/views/auth/user_detail_screen.dart/user_detail_screen.dart';
 import 'package:eyeinsider/views/splash_and_onboarding/splash_screen.dart';
 import 'package:flutter/cupertino.dart';

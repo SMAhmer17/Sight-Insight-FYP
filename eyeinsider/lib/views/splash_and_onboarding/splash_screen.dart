@@ -1,6 +1,5 @@
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/shared/custom_widgets/custom_divider.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:eyeinsider/views/splash_and_onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';

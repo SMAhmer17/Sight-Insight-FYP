@@ -1,6 +1,6 @@
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/service/widgets.dart';
+import 'package:eyeinsider/service/extensions/widgets_extension.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_divider.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_text_field.dart';
