@@ -1,5 +1,7 @@
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
+import 'package:eyeinsider/data/user_data/user_model.dart';
+import 'package:eyeinsider/providers/user_detail_provider.dart';
 import 'package:eyeinsider/service/extensions/widgets_extension.dart';
 import 'package:eyeinsider/service/validator/validator_service.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
@@ -7,12 +9,12 @@ import 'package:eyeinsider/shared/custom_widgets/custom_text_field.dart';
 import 'package:eyeinsider/shared/custom_widgets/input_descriptor.dart';
 import 'package:eyeinsider/shared/custom_widgets/label_and_text_field.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
-import 'package:eyeinsider/views/auth/signup_screen.dart';
-
+import 'package:eyeinsider/views/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class UserDetailScreen extends StatefulWidget {
   static const id = 'loginScreen';
@@ -39,17 +41,14 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-         SystemChrome.setSystemUIOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        
-      statusBarColor: ColorConstant.secondary,
+        statusBarColor: ColorConstant.secondary,
         systemNavigationBarColor: ColorConstant.scaffoldBackgroundColor,
-        
       ),
-
     );
 
-         _formKey = GlobalKey<FormState>();
+    _formKey = GlobalKey<FormState>();
     nameDescriptor = InputDescriptor(hintText: 'Enter your name...');
     genderDescriptor = InputDescriptor(hintText: 'Enter your gender...');
     ageDescriptor = InputDescriptor(hintText: 'Enter your age...');
@@ -60,9 +59,6 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     countryDescriptor =
         InputDescriptor(hintText: 'Enter your country name here...');
     cityDescriptor = InputDescriptor(hintText: 'Enter your city name here...');
- 
-
-
   }
 
   @override
@@ -71,8 +67,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: GestureDetector(
-             behavior: HitTestBehavior.opaque,
-        onTap: () => FocusScope.of(context).unfocus(),
+            behavior: HitTestBehavior.opaque,
+            onTap: () => FocusScope.of(context).unfocus(),
             child: Column(
               children: [
                 SizedBox(
@@ -126,60 +122,110 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         .02.sh.height,
                         LabelAndTextField(
                             label: 'Your Name',
-                            customTextField:
-                                CustomTextField(descriptor: nameDescriptor , validator: Validators.mandatoryFieldValidation, nextFocusNode:  genderDescriptor.focusNode,)),
-                                10.height,
+                            customTextField: CustomTextField(
+                              descriptor: nameDescriptor,
+                              validator: Validators.mandatoryFieldValidation,
+                              nextFocusNode: genderDescriptor.focusNode,
+                            )),
+                        10.height,
                         LabelAndTextField(
                             label: 'Gender',
-                            customTextField:
-                                CustomTextField(descriptor: genderDescriptor, validator: Validators.mandatoryFieldValidation, nextFocusNode:  ageDescriptor.focusNode)),
+                            customTextField: CustomTextField(
+                                descriptor: genderDescriptor,
+                                validator: Validators.mandatoryFieldValidation,
+                                nextFocusNode: ageDescriptor.focusNode)),
                         10.height,
                         LabelAndTextField(
                             label: 'Age',
-                            customTextField:
-                                CustomTextField(descriptor: ageDescriptor, validator: Validators.mandatoryFieldValidation, nextFocusNode:  eyeDiseaseDescriptor.focusNode)),
+                            customTextField: CustomTextField(
+                                descriptor: ageDescriptor,
+                                validator: Validators.mandatoryFieldValidation,
+                                nextFocusNode: eyeDiseaseDescriptor.focusNode)),
                         10.height,
                         LabelAndTextField(
                             label: 'Any eye disease before',
-                            customTextField:
-                                CustomTextField(descriptor: eyeDiseaseDescriptor, validator: Validators.mandatoryFieldValidation, nextFocusNode:  phoneNumberDescriptor.focusNode)),
-                       10.height,
+                            customTextField: CustomTextField(
+                                descriptor: eyeDiseaseDescriptor,
+                                validator: Validators.mandatoryFieldValidation,
+                                nextFocusNode:
+                                    phoneNumberDescriptor.focusNode)),
+                        10.height,
                         LabelAndTextField(
                             label: 'Country',
-                            customTextField:
-                                CustomTextField(descriptor: countryDescriptor, validator: Validators.mandatoryFieldValidation,  nextFocusNode:  cityDescriptor.focusNode)),
+                            customTextField: CustomTextField(
+                                descriptor: countryDescriptor,
+                                validator: Validators.mandatoryFieldValidation,
+                                nextFocusNode: cityDescriptor.focusNode)),
                         10.height,
                         LabelAndTextField(
                             label: 'City',
-                            customTextField:
-                                CustomTextField(descriptor: cityDescriptor, validator: Validators.mandatoryFieldValidation, nextFocusNode:  phoneNumberDescriptor.focusNode)),
-                    
+                            customTextField: CustomTextField(
+                                descriptor: cityDescriptor,
+                                validator: Validators.mandatoryFieldValidation,
+                                nextFocusNode:
+                                    phoneNumberDescriptor.focusNode)),
                         10.height,
                         LabelAndTextField(
                             label: 'Phone number',
-                            customTextField:
-                                CustomTextField(descriptor: phoneNumberDescriptor, validator: Validators.mandatoryFieldValidation)),
+                            customTextField: CustomTextField(
+                                descriptor: phoneNumberDescriptor,
+                                validator:
+                                    Validators.mandatoryFieldValidation)),
                         10.height,
+
                         CustomElevatedButton(
-                          widget: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Save',
-                                style: context.titleMedium
-                                    ?.copyWith(color: Colors.white),
-                              )
-                            ],
-                          ),
-                          onPressed: () {
-            
-                            if(_formKey.currentState!.validate()){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const SignUpScreen() ));
-                  
-                            }
-                              
-                          },
-                        ),
+                            onPressed: () {
+                              // Storing data temporarily in the model
+                              final userProv = Provider.of<UserDetailsProvider>(
+                                  context,
+                                  listen: false);
+                              userProv.setTempUserData(UserModel(
+                                name: nameDescriptor.controller.text,
+                                gender: genderDescriptor.controller.text,
+                                age: 22,
+                                dob: DateTime.now(),
+                                previousEyeDisease: false,
+                                country: countryDescriptor.controller.text,
+                                city: cityDescriptor.controller.text,
+                                phoneNumber: 212321,
+                                email: 'samer003@gmail.com',
+                              ));
+                              Navigator.of(context).push(_createRoute(nextScreen:  LoginScreen()));
+                            },
+                            title: 'Save')
+
+                        // Consumer<UserDetailsProvider>(
+                        //     builder: (context, userProv, _) {
+                        //   return CustomElevatedButton(
+                        //     title: 'Save',
+                        //     loading: userProv.loading,
+                        //     onPressed: () async {
+                        //       if (_formKey.currentState!.validate()) {
+                        //         await userProv.postUserDetails(
+                        //             userModel: UserModel(
+                        //                 name: nameDescriptor.controller.text,
+                        //                 gender:
+                        //                     genderDescriptor.controller.text,
+                        //                 // age: int.tryParse(ageDescriptor.controller.text) ,
+                        //                 age: 22,
+                        //                 dob: DateTime.now(),
+                        //                 previousEyeDisease: false,
+                        //                 country:
+                        //                     countryDescriptor.controller.text,
+                        //                 city: cityDescriptor.controller.text,
+                        //                 phoneNumber: 212321,
+                        //                 email: 'samer003@gmail.com'),
+                        //             uid: 'w');
+
+                        //         await Navigator.push(
+                        //             context,
+                        //             MaterialPageRoute(
+                        //                 builder: (context) =>
+                        //                     const SignUpScreen()));
+                        // }
+                        // },
+                        // );
+                        // }),
                       ],
                     ),
                   ),
@@ -189,4 +235,28 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           ),
         ));
   }
+}
+
+
+Route _createRoute({required Widget nextScreen}) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>  nextScreen,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve , ));
+
+      return SlideTransition(
+        
+        position: animation.drive(tween),
+        child: child,
+  
+      );
+      
+    },
+     transitionDuration: const Duration(milliseconds: 800)
+  );
+  
 }

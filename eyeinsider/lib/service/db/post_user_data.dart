@@ -1,9 +1,6 @@
 
 
-import 'package:eyeinsider/data/user_data/user_entity.dart';
 import 'package:eyeinsider/service/firebase/firebase_db_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 class OnboardingDbService with FirebaseServices{
 
 

@@ -87,16 +87,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           CustomTextField(descriptor: emailDescriptor)),
                   // Spacer(),
                   CustomElevatedButton(
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sign in',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
+                    title: 'Send OTP',
                     onPressed: () {},
                   ),
                   

@@ -27,10 +27,10 @@ class AuthenticationService {
     BuildContext context,
   ) async {
     try {
-      final userCred = await _firebaseAuth.loginWithEmailPassword(
-        email,
-        password,
-      );
+      // final userCred = await _firebaseAuth.loginWithEmailPassword(
+      //   email,
+      //   password,
+      // );
 
     } catch (e) {
       DI

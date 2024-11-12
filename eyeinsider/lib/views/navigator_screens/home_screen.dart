@@ -10,13 +10,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-
 
   final List pages = [
       'Home' , 'Camera' , 'Blogs' , 'Profile'
   ] ;
   int currentTabIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

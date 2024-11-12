@@ -98,16 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           CustomTextField(descriptor: passwordDescriptor ,obscureText: true, )),
                   .04.sh.height,
                   CustomElevatedButton(
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sign in',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
+                    title: 'Sign in',
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                     },
@@ -119,16 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomElevatedButton(
                     bgColor: Colors.blue.shade800,
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue with google',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
+                    
+                     title:
+                     'Continue with google',
                     onPressed: () {},
                   ),
                 ],

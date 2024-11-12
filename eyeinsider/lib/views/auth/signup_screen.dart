@@ -97,16 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           CustomTextField(descriptor: passwordDescriptor)),
                   .04.sh.height,
                   CustomElevatedButton(
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sign up',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
+                    title: 'Sign up',
                     onPressed: () {},
                   ),
                   CustomDivider(
@@ -116,16 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomElevatedButton(
                     bgColor: Colors.blue.shade800,
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue with google',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
+                    title:  'Continue with google',
                     onPressed: () {},
                   ),
                 ],
