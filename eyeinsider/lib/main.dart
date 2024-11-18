@@ -1,7 +1,7 @@
 
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/providers/user_detail_provider.dart';
 import 'package:eyeinsider/service/DI/di_service.dart';
+import 'package:eyeinsider/service/navigation/navigation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MultiProvider(
-        providers: [ ChangeNotifierProvider(
-                create: (context) => DI.i<UserDetailsProvider>()),],
+        providers: AppProvider.getProviders(),
         child: MaterialApp(
+          navigatorKey:  DI.i<NavigationService>().navigationKey, // Ensure this is correctly set,
             debugShowCheckedModeBanner: false,
           title: 'Eye Insider',
           // theme: CustomThemeData. getThemeData(),

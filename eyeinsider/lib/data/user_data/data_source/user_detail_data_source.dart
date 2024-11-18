@@ -29,10 +29,10 @@ import 'package:flutter/material.dart';
 // }
 
 
-class UserDetailDataSource {
+class UserDetailFirebaseDataSource {
   final FirebaseFirestore firestore = FirebaseFirestore.instance ;
 
-  // UserDetailDataSource({required this.firestore});
+    // Fet
 
   // Future<List<UserEntity>> getUserDetails() async {
   //   try {

@@ -83,4 +83,8 @@ class NavigationService {
     Navigator.push(_navigatorKey.currentContext!,
         MaterialPageRoute(builder: (navigatorKey) => nextScreen));
   }
+  pushReplacementToScreen({required Widget nextScreen}) {
+    Navigator.pushReplacement(_navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (navigatorKey) => nextScreen));
+  }
 }

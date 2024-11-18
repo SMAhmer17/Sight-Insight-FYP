@@ -56,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       
       ),
       trailingFunction: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
             builder: (context) => const SplashScreen(),

@@ -1,8 +1,11 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
 import 'package:eyeinsider/data/user_data/user_model.dart';
 import 'package:eyeinsider/providers/user_detail_provider.dart';
+import 'package:eyeinsider/service/DI/di_service.dart';
 import 'package:eyeinsider/service/extensions/widgets_extension.dart';
+import 'package:eyeinsider/service/navigation/navigation_service.dart';
 import 'package:eyeinsider/service/validator/validator_service.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_text_field.dart';
@@ -10,10 +13,12 @@ import 'package:eyeinsider/shared/custom_widgets/input_descriptor.dart';
 import 'package:eyeinsider/shared/custom_widgets/label_and_text_field.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:eyeinsider/views/auth/login_screen.dart';
+import 'package:eyeinsider/views/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserDetailScreen extends StatefulWidget {
@@ -61,6 +66,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
     cityDescriptor = InputDescriptor(hintText: 'Enter your city name here...');
   }
 
+  String selectedValue = 'Select an option';
+  List<String> genderOptions = ['Male', 'Female'];
+  List<String> eyeDiseaseOptions = ['Yes', 'No'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,32 +136,105 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               nextFocusNode: genderDescriptor.focusNode,
                             )),
                         10.height,
-                        LabelAndTextField(
-                            label: 'Gender',
-                            customTextField: CustomTextField(
-                                descriptor: genderDescriptor,
-                                validator: Validators.mandatoryFieldValidation,
-                                nextFocusNode: ageDescriptor.focusNode)),
+                        GestureDetector(
+                          onTapDown: (TapDownDetails details) async {
+                            // Get the tap position
+                            final tapPosition = details.globalPosition;
+
+                            // Show the menu at the tap position
+                            String? result = await showCustomMenu(
+                                context: context,
+                                tapPosition: tapPosition,
+                                options: genderOptions);
+
+                            if (result != null) {
+                              genderDescriptor.controller.text = result;
+                            }
+                          },
+                          child: LabelAndTextField(
+                              label: 'Gender',
+                              customTextField: CustomTextField(
+                                  descriptor: genderDescriptor,
+                                  readOnly: true,
+                                  validator:
+                                      Validators.mandatoryFieldValidation,
+                                  nextFocusNode: ageDescriptor.focusNode)),
+                        ),
                         10.height,
                         LabelAndTextField(
-                            label: 'Age',
+                            label: 'Date of birth',
                             customTextField: CustomTextField(
                                 descriptor: ageDescriptor,
+                                keyBoardType: TextInputType.number,
+                                readOnly: true,
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime(1980),
+                                    lastDate: DateTime(2018),
+                                    initialDate: DateTime(2010),
+                                  );
+
+                                  if (pickedDate != null) {
+                                    ageDescriptor.controller.text =
+                                        DateFormat('dd MMM yyyy')
+                                            .format(pickedDate);
+                                    // setState(() {});
+                                  }
+                                },
                                 validator: Validators.mandatoryFieldValidation,
                                 nextFocusNode: eyeDiseaseDescriptor.focusNode)),
                         10.height,
-                        LabelAndTextField(
-                            label: 'Any eye disease before',
-                            customTextField: CustomTextField(
-                                descriptor: eyeDiseaseDescriptor,
-                                validator: Validators.mandatoryFieldValidation,
-                                nextFocusNode:
-                                    phoneNumberDescriptor.focusNode)),
+                        GestureDetector(
+                          onTapDown: (TapDownDetails details) async {
+                            // Get the tap position
+                            final tapPosition = details.globalPosition;
+
+                            // Show the menu at the tap position
+                            String? result = await showCustomMenu(
+                                context: context,
+                                tapPosition: tapPosition,
+                                options: eyeDiseaseOptions);
+
+                            if (result != null) {
+                              eyeDiseaseDescriptor.controller.text = result;
+                            }
+                          },
+                          child: LabelAndTextField(
+                              label: 'Any eye disease before',
+                              customTextField: CustomTextField(
+                                  descriptor: eyeDiseaseDescriptor,
+                                  readOnly: true,
+                                  onTap: () {},
+                                  validator:
+                                      Validators.mandatoryFieldValidation,
+                                  nextFocusNode: countryDescriptor.focusNode)),
+                        ),
                         10.height,
                         LabelAndTextField(
                             label: 'Country',
                             customTextField: CustomTextField(
                                 descriptor: countryDescriptor,
+                                readOnly: true,
+                                onTap: () {
+                                  // DI.i<NavigationService>().showBottomsheet(child: s)
+                                  showCountryPicker(
+                                    countryListTheme: CountryListThemeData(
+                                      padding: const EdgeInsets.all(4),
+                                      bottomSheetHeight: 0.7.sh,
+                                      flagSize: 25,
+                                    ),
+                                    context: context,
+
+                                    showPhoneCode:
+                                        true, // optional. Shows phone code before the country name.
+                                    onSelect: (Country country) {
+                                      countryDescriptor.controller.text =
+                                          country.displayNameNoCountryCode;
+                                      print('Select country: ${country.name}');
+                                    },
+                                  );
+                                },
                                 validator: Validators.mandatoryFieldValidation,
                                 nextFocusNode: cityDescriptor.focusNode)),
                         10.height,
@@ -169,6 +250,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             label: 'Phone number',
                             customTextField: CustomTextField(
                                 descriptor: phoneNumberDescriptor,
+                                keyBoardType: TextInputType.number,
                                 validator:
                                     Validators.mandatoryFieldValidation)),
                         10.height,
@@ -179,18 +261,24 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               final userProv = Provider.of<UserDetailsProvider>(
                                   context,
                                   listen: false);
-                              userProv.setTempUserData(UserModel(
+                              final user = UserModel(
+                                uid: '',
                                 name: nameDescriptor.controller.text,
                                 gender: genderDescriptor.controller.text,
-                                age: 22,
+                                age: int.parse(ageDescriptor.controller.text),
                                 dob: DateTime.now(),
                                 previousEyeDisease: false,
                                 country: countryDescriptor.controller.text,
                                 city: cityDescriptor.controller.text,
-                                phoneNumber: 212321,
-                                email: 'samer003@gmail.com',
-                              ));
-                              Navigator.of(context).push(_createRoute(nextScreen:  LoginScreen()));
+                                phoneNumber: int.parse(
+                                    phoneNumberDescriptor.controller.text),
+                                email: 'default@gmail.com',
+                              );
+                              userProv.setTempUserData(user);
+                              Navigator.of(context).pushReplacement(createRoute(
+                                  nextScreen: SignUpScreen(
+                                userModel: user,
+                              )));
                             },
                             title: 'Save')
 
@@ -215,7 +303,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                         //                 city: cityDescriptor.controller.text,
                         //                 phoneNumber: 212321,
                         //                 email: 'samer003@gmail.com'),
-                        //             uid: 'w');
+                        //             uid: 'Q');
 
                         //         await Navigator.push(
                         //             context,
@@ -235,28 +323,52 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
           ),
         ));
   }
+
+  Future<String?> showCustomMenu(
+      {required BuildContext context,
+      required Offset tapPosition,
+      required List<String> options}) {
+    return showMenu<String>(
+      color: ColorConstant.divider,
+      context: context,
+      position: RelativeRect.fromLTRB(
+        tapPosition.dx,
+        tapPosition.dy,
+        MediaQuery.of(context).size.width - tapPosition.dx,
+        MediaQuery.of(context).size.height - tapPosition.dy,
+      ),
+      items: options
+          .map((option) => PopupMenuItem<String>(
+                value: option,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: .0.sw),
+                  child: Text(
+                    option,
+                    style: context.bodyMedium?.copyWith(color: Colors.black),
+                  ),
+                ),
+              ))
+          .toList(),
+    );
+  }
 }
 
-
-Route _createRoute({required Widget nextScreen}) {
+Route createRoute({required Widget nextScreen}) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>  nextScreen,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
+      pageBuilder: (context, animation, secondaryAnimation) => nextScreen,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve , ));
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(
+          curve: curve,
+        ));
 
-      return SlideTransition(
-        
-        position: animation.drive(tween),
-        child: child,
-  
-      );
-      
-    },
-     transitionDuration: const Duration(milliseconds: 800)
-  );
-  
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 800));
 }

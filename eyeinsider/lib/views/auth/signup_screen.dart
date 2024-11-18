@@ -1,5 +1,19 @@
+import 'dart:developer';
+
+import 'package:eyeinsider/providers/user_detail_provider.dart';
+import 'package:eyeinsider/service/DI/di_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
+import 'package:eyeinsider/data/user_data/user_model.dart';
+import 'package:eyeinsider/providers/auth_provider.dart';
 import 'package:eyeinsider/service/extensions/widgets_extension.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_divider.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
@@ -8,17 +22,21 @@ import 'package:eyeinsider/shared/custom_widgets/input_descriptor.dart';
 import 'package:eyeinsider/shared/custom_widgets/label_and_text_field.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:eyeinsider/views/auth/login_screen.dart';
-import 'package:flutter/gestures.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:eyeinsider/views/auth/user_detail_screen.dart/user_detail_screen.dart';
+import 'package:eyeinsider/views/navigator_screens/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const id = 'signupScreen';
-   static dynamic route = MaterialPageRoute(builder: (context) => const SignUpScreen());
-  const SignUpScreen({super.key});
+  static dynamic route = MaterialPageRoute(
+      builder: (context) => const SignUpScreen(
+            userModel: null,
+          ));
+
+  final UserModel? userModel;
+  const SignUpScreen({
+    super.key,
+    this.userModel,
+  });
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -35,8 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     emailDescriptor = InputDescriptor(hintText: 'Enter your email address...');
     passwordDescriptor = InputDescriptor(hintText: 'Enter your password...');
- 
-
   }
 
   @override
@@ -96,10 +112,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       customTextField:
                           CustomTextField(descriptor: passwordDescriptor)),
                   .04.sh.height,
-                  CustomElevatedButton(
-                    title: 'Sign up',
-                    onPressed: () {},
-                  ),
+                  Consumer<AuthProvider2>(builder: (context, prov, _) {
+                    return CustomElevatedButton(
+                      title: 'Sign up',
+                      loading: prov.loading,
+                      onPressed: () {
+                        prov.signUpWithEmailPass(
+                            email: emailDescriptor.controller.text.trim(),
+                            password: passwordDescriptor.controller.text.trim(),
+                            userModel: widget.userModel!);
+                      },
+                    );
+                  }),
                   CustomDivider(
                     showOrText: true,
                     bottomPadding: .03.sh,
@@ -107,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomElevatedButton(
                     bgColor: Colors.blue.shade800,
-                    title:  'Continue with google',
+                    title: 'Continue with google',
                     onPressed: () {},
                   ),
                 ],
@@ -128,18 +152,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               TextSpan(
                                 text: 'Sign in',
-                                style: context.bodyLarge
-                                    ?.copyWith(color: ColorConstant.lightGrey ,      decoration: TextDecoration.underline,
-                                   ),
+                                style: context.bodyLarge?.copyWith(
+                                  color: ColorConstant.lightGrey,
+                                  decoration: TextDecoration.underline,
+                                ),
                                 recognizer: TapGestureRecognizer()
-                                  
                                   ..onTap = () {
-                                  Navigator.push(context, LoginScreen.route);
+                                    Navigator.push(context, LoginScreen.route);
                                   },
                               )
                             ])),
                   ),
-                 
                 ],
               ),
             )

@@ -4,17 +4,6 @@ import 'package:eyeinsider/domain/user_details/user_details_repo.dart';
 
 import '../../data/user_data/user_model.dart';
 
-// class UserDetails{
-//   final UserDetailsRepo repo;
-
-//   UserDetails({required this.repo});
-
-//   Future<void> postUserDetails(UserModel userModel) async{
-//     await repo.postUserDetails(userModel:  userModel);
-//   }
-
-// }
-
 
 class UserDetails {
   final UserDetailsRepo repo;

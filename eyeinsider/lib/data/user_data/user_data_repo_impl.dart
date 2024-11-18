@@ -3,32 +3,14 @@ import 'package:eyeinsider/data/user_data/user_model.dart';
 import 'package:eyeinsider/domain/user_details/user_details_repo.dart';
 import 'package:eyeinsider/domain/user_details/user_entity.dart';
 
-// class UserDetailsRepoImpl implements UserDetailsRepo {
-//   final UserDetailDataSource dataSource;
-
-//   UserDetailsRepoImpl({required this.dataSource});
-
-
-//   @override
-//   Future<List<UserEntity>> getUserDetail() async{
-//     return await  dataSource.getUserDetails();
-//   }
-
-//   @override
-//   Future<void> postUserDetails({required UserModel userModel})async {
-//       await dataSource.postUserDetails(userModel : userModel);
-//   }
-
-//   @override
-//   Future<void> updateUserDetails({required String id , required UserModel userModel}) async{
-//     await dataSource.updateUserDetails(id: id , userModel: userModel);
-//   }
-  // }
-
-
 
 class UserDetailsRepoImpl implements UserDetailsRepo {
-  final UserDetailDataSource dataSource = UserDetailDataSource();
+
+final UserDetailFirebaseDataSource dataSource;
+
+  UserDetailsRepoImpl({required this.dataSource});
+
+  
 
 
   @override

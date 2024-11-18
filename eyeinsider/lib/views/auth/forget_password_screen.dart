@@ -1,5 +1,6 @@
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
+import 'package:eyeinsider/providers/auth_provider.dart';
 import 'package:eyeinsider/service/extensions/widgets_extension.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_text_field.dart';
@@ -10,10 +11,12 @@ import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ForgetPassword extends StatefulWidget {
-    static const id = 'forgetPasswordScreen';
-  static dynamic route = MaterialPageRoute(builder: (context) => const ForgetPassword());
+  static const id = 'forgetPasswordScreen';
+  static dynamic route =
+      MaterialPageRoute(builder: (context) => const ForgetPassword());
   const ForgetPassword({super.key});
 
   @override
@@ -86,16 +89,20 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       customTextField:
                           CustomTextField(descriptor: emailDescriptor)),
                   // Spacer(),
-                  CustomElevatedButton(
-                    title: 'Send OTP',
-                    onPressed: () {},
-                  ),
-                  
-                  
+
+                  Consumer<AuthProvider2>(builder: (context, prov, _) {
+                    return CustomElevatedButton(
+                      title: 'Send OTP',
+                      loading: prov.loading,
+                      onPressed: () {
+                        prov.resetPassword(
+                            email: emailDescriptor.controller.text.trim());
+                      },
+                    );
+                  }),
                 ],
               ),
             ),
-            
           ],
         ));
   }

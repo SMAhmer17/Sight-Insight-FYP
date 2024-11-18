@@ -3,6 +3,7 @@ import 'package:eyeinsider/domain/user_details/user_entity.dart';
 
 class UserModel extends UserEntity {
   UserModel({
+    super.uid,
     super.imageUrlPath,
     required super.name,
     required super.gender,
@@ -17,7 +18,8 @@ class UserModel extends UserEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      'imageUrlPath': imageUrlPath ?? 'Null',
+      'uid': uid,
+      'imageUrlPath': imageUrlPath,
       'name': name,
       'gender': gender,
       'age': age,
@@ -32,11 +34,12 @@ class UserModel extends UserEntity {
 
   @override
   String toString() {
-    return 'UserModel(imageUrlPath: $imageUrlPath, name: $name, gender: $gender, age: $age, dob: $dob, previousEyeDisease: $previousEyeDisease, country: $country, city: $city, phonenNumber: $phoneNumber, email: $email)';
+    return 'UserModel(User Id: $uid, imageUrlPath: $imageUrlPath, name: $name, gender: $gender, age: $age, dob: $dob, previousEyeDisease: $previousEyeDisease, country: $country, city: $city, phonenNumber: $phoneNumber, email: $email)';
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
+      uid: map['id'] as String?,
       imageUrlPath: map['imageUrlPath'] as String?,
       name: map['name'] as String,
       gender: map['gender'] as String,
@@ -50,7 +53,8 @@ class UserModel extends UserEntity {
     );
   }
 
-   UserModel copyWith({
+  UserModel copyWith({
+    String? uid,
     String? imageUrlPath,
     String? name,
     int? age,
@@ -62,7 +66,8 @@ class UserModel extends UserEntity {
     String? email,
   }) {
     return UserModel(
-      imageUrlPath: imageUrlPath  ?? this.imageUrlPath,
+        uid: uid ?? this.uid,
+        imageUrlPath: imageUrlPath ?? this.imageUrlPath,
         name: name ?? this.name,
         gender: gender,
         age: age ?? this.age,
@@ -72,5 +77,19 @@ class UserModel extends UserEntity {
         city: city ?? this.city,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         email: email ?? this.email);
+  }
+
+  UserEntity toDomain() {
+    return UserEntity(
+        uid: uid,
+        name: name,
+        gender: gender,
+        age: age,
+        dob: dob,
+        previousEyeDisease: previousEyeDisease,
+        country: country,
+        city: city,
+        phoneNumber: phoneNumber,
+        email: email);
   }
 }

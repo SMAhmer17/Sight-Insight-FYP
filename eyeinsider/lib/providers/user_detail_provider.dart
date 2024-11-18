@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:eyeinsider/data/user_data/user_data_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:eyeinsider/data/user_data/user_model.dart';
@@ -5,9 +7,9 @@ import 'package:eyeinsider/domain/user_details/user_details_repo.dart';
 import 'package:eyeinsider/domain/user_details/user_entity.dart';
 
 class UserDetailsProvider extends ChangeNotifier {
-  UserDetailsProvider();
-  final UserDetailsRepo userDetailsRepo = UserDetailsRepoImpl();
-// final UserDetailsRepo userDetailsRepo = UserDetailsRepoImpl(dataSource: FirebaseFirestore.instance);
+  // DI
+  final UserDetailsRepo userDetailsRepo;
+  UserDetailsProvider({required this.userDetailsRepo});
 
   UserEntity? _userDetails;
   bool loading = false;
@@ -19,6 +21,7 @@ class UserDetailsProvider extends ChangeNotifier {
   String? get error => _error;
 
   UserModel? _tempUserData;
+
   // Getter for temporary user data
   UserModel? get tempUserData => _tempUserData;
 
@@ -44,17 +47,23 @@ class UserDetailsProvider extends ChangeNotifier {
 
   // Method to post user details
   Future<void> postUserDetails(
-      {required UserModel userModel, required String uid}) async {
+      {required UserModel userModel, String? uid}) async {
     try {
       _setLoading(true);
       loading = true;
       notifyListeners();
-      await userDetailsRepo.postUserDetails(userModel: userModel, uid: uid);
+
+      if (uid == null) {
+        throw Exception('UID is null while posting user details');
+      }
+      await userDetailsRepo.postUserDetails(userModel: userModel, uid: uid!);
       _error = null;
       // Optionally, refresh user details after posting
       await fetchUserDetails(uid: uid);
+      return;
     } catch (e) {
       _error = 'Failed to post user details: $e';
+      log('Erro on posting user detail model');
     } finally {
       _setLoading(false);
     }
