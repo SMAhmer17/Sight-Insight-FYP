@@ -1,12 +1,13 @@
+import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
-import 'package:eyeinsider/views/auth/login_screen.dart';
 import 'package:eyeinsider/views/auth/user_detail_screen.dart/user_detail_screen.dart';
 import 'package:eyeinsider/views/splash_and_onboarding/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -16,48 +17,38 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-
   @override
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        
-      statusBarColor: ColorConstant.whiteColor,
+        statusBarColor: ColorConstant.whiteColor,
         systemNavigationBarColor: ColorConstant.whiteColor,
-        
       ),
     );
   }
 
-
-  final  kDarkBlueColor = Colors.blue;
+  final kDarkBlueColor = Colors.blue;
   @override
   Widget build(BuildContext context) {
     return OnBoardingSlider(
-        
+      centerBackground: true,
       finishButtonText: 'Register',
+      
       onFinish: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const UserDetailScreen())
-        );
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const UserDetailScreen()));
       },
       finishButtonStyle: const FinishButtonStyle(
-        backgroundColor: ColorConstant.primary,
-        elevation: 10
-      ),
-      skipTextButton: Text(
-        'Skip',
-        style: context.titleMedium?.copyWith(color: ColorConstant.primary , fontWeight: FontWeight.w800) 
-      ),
-      trailing: Text(
-        'Start',
-  style: context.titleMedium?.copyWith(color: ColorConstant.primary , fontWeight: FontWeight.w800) 
-      
-      ),
+          backgroundColor: ColorConstant.primary, elevation: 10),
+      skipTextButton: Text('Skip',
+          style: context.titleMedium?.copyWith(
+              color: ColorConstant.primary, fontWeight: FontWeight.w800)),
+      trailing: Text('Start',
+          style: context.titleMedium?.copyWith(
+              color: ColorConstant.primary, fontWeight: FontWeight.w800)),
       trailingFunction: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
             builder: (context) => const SplashScreen(),
@@ -69,21 +60,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       headerBackgroundColor: Colors.white,
       pageBackgroundColor: Colors.white,
       background: [
-        Icon(Icons.abc_rounded),
-        Icon(Icons.abc_rounded),
-        Icon(Icons.abc_rounded),
-        // Image.asset(
-        //   'assets/slide_1.png',
-        //   height: 400,
-        // ),
-        // Image.asset(
-        //   'assets/slide_2.png',
-        //   height: 400,
-        // ),
-        // Image.asset(
-        //   'assets/slide_3.png',
-        //   height: 400,
-        // ),
+        Padding(
+          padding: const EdgeInsets.only(top:  12.0),
+          child: Image.asset(
+            ImageConstant.onboarding1,
+            fit: BoxFit.cover,
+            height: .5.sh,
+          ),
+        ),
+        Padding(
+         padding: const EdgeInsets.only(top:  12.0),
+          child: Image.asset(
+            ImageConstant.onboarding2,
+            fit: BoxFit.cover,
+            height: .5.sh,
+          ),
+        ),
+        Padding(
+         padding: const EdgeInsets.only(top:  12.0),
+          child: Image.asset(
+            ImageConstant.onboarding3,
+            fit: BoxFit.cover,
+            height: .5.sh,
+          ),
+        ),
       ],
       speed: 1.8,
       pageBodies: [
@@ -98,20 +98,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const SizedBox(
                 height: 480,
               ),
-              Text(
-                'Protect Your Vision',
-                textAlign: TextAlign.center,
-                style: context.headlineMedium?.copyWith(color: ColorConstant.primary)
-              ),
+              Text('Protect Your Vision',
+                  textAlign: TextAlign.center,
+                  style: context.headlineMedium
+                      ?.copyWith(color: ColorConstant.primary)),
               const SizedBox(
                 height: 20,
               ),
-               Text(
-                'Detect issues early to protect your vision for life',
-                textAlign: TextAlign.center,
-                
-                style: context.titleMedium?.copyWith(color: ColorConstant.lightGrey)
-              ),
+              Text('Detect issues early to protect your vision for life',
+                  textAlign: TextAlign.center,
+                  style: context.titleMedium
+                      ?.copyWith(color: ColorConstant.lightGrey)),
             ],
           ),
         ),
@@ -126,25 +123,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const SizedBox(
                 height: 480,
               ),
-              Text(
-                'Quick and Easy Scans',
-                textAlign: TextAlign.center,
-
-                style: context.headlineMedium?.copyWith(color: ColorConstant.primary)
-              ),
+              Text('Quick and Easy Scans',
+                  textAlign: TextAlign.center,
+                  style: context.headlineMedium
+                      ?.copyWith(color: ColorConstant.primary)),
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                'Get instant insights—no fuss, just results.',
-                textAlign: TextAlign.center,
-                style: context.bodyLarge?.copyWith(color: Colors.green)
-                // TextStyle(
-                //   color: Colors.black26,
-                //   fontSize: 18.0,
-                //   fontWeight: FontWeight.w600,
-                // ),
-              ),
+              Text('Get instant insights—no fuss, just results.',
+                  textAlign: TextAlign.center,
+                  style: context.bodyLarge?.copyWith(color: Colors.green)
+                  // TextStyle(
+                  //   color: Colors.black26,
+                  //   fontSize: 18.0,
+                  //   fontWeight: FontWeight.w600,
+                  // ),
+                  ),
             ],
           ),
         ),
@@ -159,24 +153,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               const SizedBox(
                 height: 480,
               ),
-              Text(
-                'Your Vision, Your Journey',
-                textAlign: TextAlign.center,
-              
-                style: context.headlineMedium?.copyWith(color: ColorConstant.primary)),
+              Text('Your Vision, Your Journey',
+                  textAlign: TextAlign.center,
+                  style: context.headlineMedium
+                      ?.copyWith(color: ColorConstant.primary)),
               const SizedBox(
                 height: 20,
               ),
-               Text(
-                'Personalized steps to keep your vision sharp.',
-                textAlign: TextAlign.center,
-                  style: context.titleMedium?.copyWith(color: ColorConstant.lightGrey)
-              
-              ),
+              Text('Personalized steps to keep your vision sharp.',
+                  textAlign: TextAlign.center,
+                  style: context.titleMedium
+                      ?.copyWith(color: ColorConstant.lightGrey)),
             ],
           ),
         ),
       ],
     );
-  
-}}
+  }
+}

@@ -1,6 +1,6 @@
 
 import 'package:eyeinsider/constants/utils.dart';
-import 'package:eyeinsider/service/widgets.dart';
+import 'package:eyeinsider/service/extensions/widgets_extension.dart';
 import 'package:eyeinsider/shared/custom_widgets/input_descriptor.dart';
 import 'package:eyeinsider/theme/custom_text_style_theme.dart';
 import 'package:flutter/material.dart';

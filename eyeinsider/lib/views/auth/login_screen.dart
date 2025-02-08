@@ -1,6 +1,8 @@
 import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/service/widgets.dart';
+import 'package:eyeinsider/providers/auth_provider.dart';
+import 'package:eyeinsider/service/extensions/widgets_extension.dart';
+import 'package:eyeinsider/service/validator/validator_service.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_divider.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
 import 'package:eyeinsider/shared/custom_widgets/custom_text_field.dart';
@@ -15,10 +17,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-    static const id = 'loginScreen';
-  static dynamic route = MaterialPageRoute(builder: (context) => const LoginScreen());
+  static const id = 'loginScreen';
+  static dynamic route =
+      MaterialPageRoute(builder: (context) => const LoginScreen());
   const LoginScreen({super.key});
 
   @override
@@ -88,30 +92,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   .04.sh.height,
                   LabelAndTextField(
                       label: 'Email',
-                      customTextField:
-                          CustomTextField(descriptor: emailDescriptor)),
+                      customTextField: CustomTextField(
+                        descriptor: emailDescriptor,
+                        validator: Validators.emailValidation,
+                      )),
                   LabelAndTextField(
-
-                    
                       label: 'Password',
-                      customTextField:
-                          CustomTextField(descriptor: passwordDescriptor ,obscureText: true, )),
+                      customTextField: CustomTextField(
+                        descriptor: passwordDescriptor,
+                        obscureText: true,
+                        validator: Validators.passwordValidation,
+                      )),
                   .04.sh.height,
-                  CustomElevatedButton(
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Sign in',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                    },
-                  ),
+                  Consumer<AuthProvider2>(builder: (context, prov, _) {
+                    return CustomElevatedButton(
+                      title: 'Sign in',
+                      loading: prov.loading,
+                      onPressed: () {
+                        prov.loginWithEmailPass(
+                            email: emailDescriptor.controller.text.trim(),
+                            password:
+                                passwordDescriptor.controller.text.trim());
+                      },
+                    );
+                  }),
                   CustomDivider(
                     showOrText: true,
                     bottomPadding: .03.sh,
@@ -119,16 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomElevatedButton(
                     bgColor: Colors.blue.shade800,
-                    widget: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Continue with google',
-                          style: context.titleMedium
-                              ?.copyWith(color: Colors.white),
-                        )
-                      ],
-                    ),
+                    title: 'Continue with google',
                     onPressed: () {},
                   ),
                 ],
@@ -149,10 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               TextSpan(
                                 text: 'Sign up',
-                                style: context.bodyLarge
-                                    ?.copyWith(color: ColorConstant.lightGrey ,
-                                        decoration: TextDecoration.underline,
-                                    ),
+                                style: context.bodyLarge?.copyWith(
+                                  color: ColorConstant.lightGrey,
+                                  decoration: TextDecoration.underline,
+                                ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.push(context, SignUpScreen.route);
@@ -161,15 +156,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             ])),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(context, ForgetPassword.route);
                     },
-                    child: Text( 'Forgot your password?',
-                       style: context.bodyLarge
-                           ?.copyWith(color: ColorConstant.primary),
-                     ),
+                    child: Text(
+                      'Forgot your password?',
+                      style: context.bodyLarge
+                          ?.copyWith(color: ColorConstant.primary),
+                    ),
                   ),
-                
                 ],
               ),
             )
