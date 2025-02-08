@@ -29,13 +29,13 @@ class SignUpScreen extends StatefulWidget {
   static const id = 'signupScreen';
   static dynamic route = MaterialPageRoute(
       builder: (context) => const SignUpScreen(
-            userModel: null,
+            // userModel: null,
           ));
 
-  final UserModel? userModel;
+  // final UserModel? userModel;
   const SignUpScreen({
     super.key,
-    this.userModel,
+    // this.userModel,
   });
 
   @override
@@ -120,7 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         prov.signUpWithEmailPass(
                             email: emailDescriptor.controller.text.trim(),
                             password: passwordDescriptor.controller.text.trim(),
-                            userModel: widget.userModel!);
+                            userModel: UserModel(name: "name", gender: "gender", age: 32, dob: DateTime.now(), previousEyeDisease: false, country: "Pk", city: "Karachi", phoneNumber: 213123, email: "sahmer003@gmail"));
                       },
                     );
                   }),

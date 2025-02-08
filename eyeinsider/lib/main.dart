@@ -5,6 +5,7 @@ import 'package:eyeinsider/service/navigation/navigation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:eyeinsider/views/splash_and_onboarding/splash_screen.dart';
@@ -23,7 +24,10 @@ SystemChrome.setSystemUIOverlayStyle(
         // statusBarBrightness:  Brightness.dark,
         // systemNavigationBarIconBrightness: Brightness.dark, // Icon Color
       ),
+
+      
     );
+   
 
      
      WidgetsFlutterBinding.ensureInitialized();

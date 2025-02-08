@@ -254,66 +254,32 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                                 validator:
                                     Validators.mandatoryFieldValidation)),
                         10.height,
-
                         CustomElevatedButton(
                             onPressed: () {
                               // Storing data temporarily in the model
-                              final userProv = Provider.of<UserDetailsProvider>(
-                                  context,
-                                  listen: false);
-                              final user = UserModel(
-                                uid: '',
-                                name: nameDescriptor.controller.text,
-                                gender: genderDescriptor.controller.text,
-                                age: int.parse(ageDescriptor.controller.text),
-                                dob: DateTime.now(),
-                                previousEyeDisease: false,
-                                country: countryDescriptor.controller.text,
-                                city: cityDescriptor.controller.text,
-                                phoneNumber: int.parse(
-                                    phoneNumberDescriptor.controller.text),
-                                email: 'default@gmail.com',
-                              );
-                              userProv.setTempUserData(user);
+                              // final userProv = Provider.of<UserDetailsProvider>(
+                              //     context,
+                              //     listen: false);
+                              // final user = UserModel(
+                              //   uid: '',
+                              //   name: nameDescriptor.controller.text,
+                              //   gender: genderDescriptor.controller.text,
+                              //   age: int.parse(ageDescriptor.controller.text),
+                              //   dob: DateTime.now(),
+                              //   previousEyeDisease: false,
+                              //   country: countryDescriptor.controller.text,
+                              //   city: cityDescriptor.controller.text,
+                              //   phoneNumber: int.parse(
+                              //       phoneNumberDescriptor.controller.text),
+                              //   email: 'default@gmail.com',
+                              // );
+                              // userProv.setTempUserData(user);
                               Navigator.of(context).pushReplacement(createRoute(
                                   nextScreen: SignUpScreen(
-                                userModel: user,
+                                // userModel: user,
                               )));
                             },
                             title: 'Save')
-
-                        // Consumer<UserDetailsProvider>(
-                        //     builder: (context, userProv, _) {
-                        //   return CustomElevatedButton(
-                        //     title: 'Save',
-                        //     loading: userProv.loading,
-                        //     onPressed: () async {
-                        //       if (_formKey.currentState!.validate()) {
-                        //         await userProv.postUserDetails(
-                        //             userModel: UserModel(
-                        //                 name: nameDescriptor.controller.text,
-                        //                 gender:
-                        //                     genderDescriptor.controller.text,
-                        //                 // age: int.tryParse(ageDescriptor.controller.text) ,
-                        //                 age: 22,
-                        //                 dob: DateTime.now(),
-                        //                 previousEyeDisease: false,
-                        //                 country:
-                        //                     countryDescriptor.controller.text,
-                        //                 city: cityDescriptor.controller.text,
-                        //                 phoneNumber: 212321,
-                        //                 email: 'samer003@gmail.com'),
-                        //             uid: 'Q');
-
-                        //         await Navigator.push(
-                        //             context,
-                        //             MaterialPageRoute(
-                        //                 builder: (context) =>
-                        //                     const SignUpScreen()));
-                        // }
-                        // },
-                        // );
-                        // }),
                       ],
                     ),
                   ),
