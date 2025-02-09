@@ -3,17 +3,18 @@ import 'package:eyeinsider/constants/assets_path/image_constant.dart';
 import 'package:eyeinsider/constants/color_constant.dart';
 import 'package:eyeinsider/data/user_data/user_model.dart';
 import 'package:eyeinsider/providers/user_detail_provider.dart';
-import 'package:eyeinsider/service/DI/di_service.dart';
-import 'package:eyeinsider/service/extensions/widgets_extension.dart';
-import 'package:eyeinsider/service/navigation/navigation_service.dart';
+import 'package:eyeinsider/core/DI/di_service.dart';
+import 'package:eyeinsider/core/extensions/widgets_extension.dart';
+import 'package:eyeinsider/core/navigation/navigation_service.dart';
 import 'package:eyeinsider/service/validator/validator_service.dart';
-import 'package:eyeinsider/shared/custom_widgets/custom_elevated_button.dart';
-import 'package:eyeinsider/shared/custom_widgets/custom_text_field.dart';
-import 'package:eyeinsider/shared/custom_widgets/input_descriptor.dart';
-import 'package:eyeinsider/shared/custom_widgets/label_and_text_field.dart';
-import 'package:eyeinsider/theme/custom_text_style_theme.dart';
+import 'package:eyeinsider/core/shared/custom_widgets/custom_elevated_button.dart';
+import 'package:eyeinsider/core/shared/custom_widgets/custom_text_field.dart';
+import 'package:eyeinsider/core/shared/custom_widgets/input_descriptor.dart';
+import 'package:eyeinsider/core/shared/custom_widgets/label_and_text_field.dart';
+import 'package:eyeinsider/core/theme/custom_text_style_theme.dart';
 import 'package:eyeinsider/views/auth/login_screen.dart';
 import 'package:eyeinsider/views/auth/signup_screen.dart';
+import 'package:eyeinsider/views/navigator_screens/base_navigator/base_navigator_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -275,9 +276,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               // );
                               // userProv.setTempUserData(user);
                               Navigator.of(context).pushReplacement(createRoute(
-                                  nextScreen: SignUpScreen(
-                                // userModel: user,
-                              )));
+                                  nextScreen: BaseNavigatorScreen(
+                                      // userModel: user,
+                                      )));
                             },
                             title: 'Save')
                       ],

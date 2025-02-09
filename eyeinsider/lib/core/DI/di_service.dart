@@ -5,7 +5,7 @@ import 'package:eyeinsider/domain/auth/auth_repo.dart';
 import 'package:eyeinsider/domain/user_details/user_details_repo.dart';
 import 'package:eyeinsider/providers/auth_provider.dart';
 import 'package:eyeinsider/providers/user_detail_provider.dart';
-import 'package:eyeinsider/service/navigation/navigation_service.dart';
+import 'package:eyeinsider/core/navigation/navigation_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 

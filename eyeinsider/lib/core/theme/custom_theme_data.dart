@@ -1,6 +1,6 @@
 import 'package:eyeinsider/constants/color_constant.dart';
 import 'package:eyeinsider/constants/utils.dart';
-import 'package:eyeinsider/theme/component_thme/component_theme.dart';
+import 'package:eyeinsider/core/theme/component_thme/component_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomThemeData {

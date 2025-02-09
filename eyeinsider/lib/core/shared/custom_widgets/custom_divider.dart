@@ -1,6 +1,6 @@
 
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/theme/custom_text_style_theme.dart';
+import 'package:eyeinsider/core/theme/custom_text_style_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

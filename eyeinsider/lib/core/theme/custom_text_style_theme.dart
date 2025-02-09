@@ -115,7 +115,7 @@ class CustomTextStyle extends TextTheme {
 ///
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constants/utils.dart';
+import '../../../constants/utils.dart';
 
 extension BuildContextUtils on BuildContext {
   ThemeData get theme => Theme.of(this);

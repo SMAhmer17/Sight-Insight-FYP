@@ -1,6 +1,6 @@
 
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/shared/bottomsheets/bottom_sheet_layout.dart';
+import 'package:eyeinsider/core/shared/bottomsheets/bottom_sheet_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

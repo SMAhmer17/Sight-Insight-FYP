@@ -1,7 +1,7 @@
 
-import 'package:eyeinsider/service/DI/di_service.dart';
+import 'package:eyeinsider/core/DI/di_service.dart';
 import 'package:eyeinsider/service/firebase/firebase_auth_service.dart';
-import 'package:eyeinsider/service/navigation/navigation_service.dart';
+import 'package:eyeinsider/core/navigation/navigation_service.dart';
 import 'package:flutter/material.dart';
 enum AuthServiceType { facebook, apple, google }
 

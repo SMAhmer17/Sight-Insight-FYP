@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:eyeinsider/data/user_data/user_model.dart';
 import 'package:eyeinsider/domain/auth/auth_repo.dart';
 import 'package:eyeinsider/providers/user_detail_provider.dart';
-import 'package:eyeinsider/service/DI/di_service.dart';
-import 'package:eyeinsider/service/navigation/navigation_service.dart';
-import 'package:eyeinsider/views/navigator_screens/home_screen.dart';
+import 'package:eyeinsider/core/DI/di_service.dart';
+import 'package:eyeinsider/core/navigation/navigation_service.dart';
+import 'package:eyeinsider/views/auth/user_detail_screen.dart/user_detail_screen.dart';
+import 'package:eyeinsider/views/navigator_screens/base_navigator/base_navigator_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class AuthProvider2 extends ChangeNotifier {
             .i<UserDetailsProvider>()
             .postUserDetails(userModel: userDetailModel, uid: user.uid);
 
-        _navService.pushReplacementToScreen(nextScreen: HomeScreen());
+        _navService.pushReplacementToScreen(nextScreen: UserDetailScreen());
         log('User created successfully');
       }
       return user;
@@ -49,6 +50,7 @@ class AuthProvider2 extends ChangeNotifier {
       loading = false;
       notifyListeners();
     }
+    return null;
   }
 
   Future<UserCredential?> loginWithEmailPass(
@@ -59,8 +61,11 @@ class AuthProvider2 extends ChangeNotifier {
 
       final userCredential =
           await repo.loginWithEmailPass(email: email, password: password);
+      if (userCredential != null) {
+        _navService.pushReplacementToScreen(nextScreen: BaseNavigatorScreen());
 
-      return userCredential;
+        return userCredential;
+      }
     } catch (e) {
       _navService.showToast(message: 'Error on login');
       log('Error on auth provider $e');
@@ -69,6 +74,7 @@ class AuthProvider2 extends ChangeNotifier {
       loading = false;
       notifyListeners();
     }
+    return null;
   }
 
   Future<void> resetPassword({required String email}) async {
@@ -78,7 +84,7 @@ class AuthProvider2 extends ChangeNotifier {
 
       await repo.resetPassword(email: email);
     } catch (e) {
-      log('Error o n sign out $e');
+      log('Error on sign out $e');
     } finally {
       loading = true;
       notifyListeners();

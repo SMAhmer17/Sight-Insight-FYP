@@ -1,7 +1,6 @@
-
 import 'package:eyeinsider/constants/color_constant.dart';
-import 'package:eyeinsider/service/DI/di_service.dart';
-import 'package:eyeinsider/service/navigation/navigation_service.dart';
+import 'package:eyeinsider/core/DI/di_service.dart';
+import 'package:eyeinsider/core/navigation/navigation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,32 +12,27 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
-void main()  async{
-SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        // statusBarColor: Colors.black, 
+void main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        // statusBarColor: Colors.black,
         /// status bar color
-      // statusBarColor: ColorConstant.scaffoldBackgroundColor,
+        // statusBarColor: ColorConstant.scaffoldBackgroundColor,
         // systemNavigationBarColor: ColorConstant.scaffoldBackgroundColor,
-        
+
         // statusBarBrightness:  Brightness.dark,
         // systemNavigationBarIconBrightness: Brightness.dark, // Icon Color
-      ),
+        ),
+  );
 
-      
-    );
-   
+  WidgetsFlutterBinding.ensureInitialized();
 
-     
-     WidgetsFlutterBinding.ensureInitialized();
-
-    DI.initialize();
+  DI.initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -52,12 +46,14 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: AppProvider.getProviders(),
         child: MaterialApp(
-          navigatorKey:  DI.i<NavigationService>().navigationKey, // Ensure this is correctly set,
-            debugShowCheckedModeBanner: false,
+          navigatorKey: DI
+              .i<NavigationService>()
+              .navigationKey, // Ensure this is correctly set,
+          debugShowCheckedModeBanner: false,
           title: 'Eye Insider',
           // theme: CustomThemeData. getThemeData(),
           theme: ThemeData(
-          scaffoldBackgroundColor: ColorConstant.scaffoldBackgroundColor ,
+            scaffoldBackgroundColor: ColorConstant.scaffoldBackgroundColor,
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),

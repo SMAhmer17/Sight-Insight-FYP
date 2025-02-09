@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:eyeinsider/domain/auth/auth_repo.dart';
-import 'package:eyeinsider/service/navigation/navigation_service.dart';
+import 'package:eyeinsider/core/navigation/navigation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../service/DI/di_service.dart';
+import '../../core/DI/di_service.dart';
 
 class AuthDataRepoImpl implements AuthRepo{
   final FirebaseAuth auth = FirebaseAuth.instance;

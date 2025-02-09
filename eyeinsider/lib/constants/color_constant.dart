@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 class ColorConstant {
-
   static const Color redColor = Colors.red;
   static const Color primary = Color(0xff0BAB7C);
   static const Color secondary = const Color.fromARGB(255, 10, 43, 70);
@@ -10,7 +8,6 @@ class ColorConstant {
   // static const Color scaffoldBackgroundColor = Color(0xffFFFFFF);
 
   //random color need to be update during development
-
 
   static const Color helper = Color(0xff49454F);
   static const Color error = Color(0xffB3261E);
@@ -33,14 +30,13 @@ class ColorConstant {
   static const Color red = Color(0xFFD74941);
   static const Color redError = Color(0xFFD74941);
   static const Color lightblue = Color(0xff49454F);
+  static const Color authScreenSystemStatusBar = Color(0xff1D212D);
   // static const Color lightGrey = Color(0xFFF0F0F0);
-
 
   ////********** NEW COLORS  */
   static const Color lightGrey = Color(0xFF424242);
   static const Color textFieldfill = Color(0xFFF3F2E9);
   static const Color scaffoldBackgroundColor = Color(0xFFFBFAF3);
-  static  Color divider = Colors.grey.shade300;
+  static Color divider = Colors.grey.shade300;
+  static Color bottomNavbar = Color.fromARGB(255, 10, 43, 70);
 }
-
-
